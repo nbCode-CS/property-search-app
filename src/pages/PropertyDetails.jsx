@@ -1,6 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+// Prefix paths with Vite base URL (for GitHub Pages)
+const withBase = (path) => {
+  if (!path) return "";
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  return `${import.meta.env.BASE_URL}${clean}`;
+};
+
 const PropertyDetails = ({ allProperties, onAddFavourite }) => {
   const { id } = useParams();
 
@@ -22,7 +29,6 @@ const PropertyDetails = ({ allProperties, onAddFavourite }) => {
     );
   }
 
-  // Images for thumbnails + gallery modal
   const images =
     Array.isArray(property.images) && property.images.length > 0
       ? property.images
@@ -34,12 +40,10 @@ const PropertyDetails = ({ allProperties, onAddFavourite }) => {
 
   return (
     <main className="property-details">
-      {/* Back link */}
       <Link className="back-link" to="/">
         ← Back to search
       </Link>
 
-      {/* Title */}
       <h1 className="details-title">
         {type} • {bedrooms} bed • £{Number(price).toLocaleString()}
       </h1>
@@ -55,7 +59,7 @@ const PropertyDetails = ({ allProperties, onAddFavourite }) => {
           {currentMain && (
             <img
               className="details-main-image"
-              src={currentMain}
+              src={withBase(currentMain)}
               alt={`${type} in ${location}`}
             />
           )}
@@ -86,7 +90,7 @@ const PropertyDetails = ({ allProperties, onAddFavourite }) => {
                 onClick={() => setMainImage(img)}
                 title="Click to view"
               >
-                <img src={img} alt="thumbnail" />
+                <img src={withBase(img)} alt="thumbnail" />
               </button>
             ))}
           </div>
@@ -134,7 +138,7 @@ const PropertyDetails = ({ allProperties, onAddFavourite }) => {
                 {property.floorplan && (
                   <img
                     className="floorplan-image"
-                    src={property.floorplan}
+                    src={withBase(property.floorplan)}
                     alt="floorplan"
                   />
                 )}
@@ -175,7 +179,7 @@ const PropertyDetails = ({ allProperties, onAddFavourite }) => {
 
             <div className="modal-grid">
               {images.map((img) => (
-                <img key={img} src={img} alt="gallery" />
+                <img key={img} src={withBase(img)} alt="gallery" />
               ))}
             </div>
           </div>

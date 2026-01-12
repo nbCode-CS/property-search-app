@@ -1,6 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+// Prefix paths with Vite base URL (for GitHub Pages)
+const withBase = (path) => {
+  if (!path) return "";
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  return `${import.meta.env.BASE_URL}${clean}`;
+};
+
 const ImageCard = ({
   property,
   isFavourite = false,
@@ -28,7 +35,7 @@ const ImageCard = ({
     >
       {/* Thumbnail */}
       <div className="image">
-        <img src={picture} alt={`${type} in ${location}`} />
+        <img src={withBase(picture)} alt={`${type} in ${location}`} />
       </div>
 
       {/* Details */}
