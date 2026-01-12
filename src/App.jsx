@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import SearchBar from "./components/SearchBar";
 import Gallery from "./components/Gallery";
@@ -55,7 +55,7 @@ function App() {
   const clearFavourites = () => setFavourites([]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path="/"
@@ -82,7 +82,7 @@ function App() {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
